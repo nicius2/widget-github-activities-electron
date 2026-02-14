@@ -1,17 +1,28 @@
 {
   "name": "widget-github-electron",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "GitHub activity widget for desktop",
+  "main": "dist/main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
+    "build": "tsc",
+    "start": "npm run build && electron .",
+    "dev": "tsc && electron .",
+    "watch": "tsc --watch"
   },
-  "keywords": [],
+  "keywords": [
+    "electron",
+    "github",
+    "widget",
+    "typescript"
+  ],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "devDependencies": {
-    "electron": "^40.4.1"
+    "@types/node": "^20.11.0",
+    "electron": "^40.4.1",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.1"
   }
 }
