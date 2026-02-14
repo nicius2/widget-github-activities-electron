@@ -1,76 +1,76 @@
 # GitHub Activity Widget
 
-Widget de desktop criado com Electron + TypeScript que exibe o gráfico de atividades do GitHub na sua tela inicial.
+Desktop widget created with Electron + TypeScript that displays your GitHub activity graph on your desktop.
 
-## 🚀 Como Usar
+## 🚀 How to Use
 
-### 1. Instalar Dependências
+### 1. Install Dependencies
 ```bash
 npm install
 ```
 
-### 2. Configurar GitHub Token
+### 2. Configure GitHub Token
 
-Você precisa criar um Personal Access Token do GitHub:
+You need to create a Personal Access Token on GitHub:
 
-1. Acesse: https://github.com/settings/tokens
-2. Clique em "Generate new token" → "Generate new token (classic)"
-3. Dê um nome ao token (ex: "Widget Desktop")
-4. Selecione o escopo: `read:user`
-5. Clique em "Generate token"
-6. Copie o token gerado
+1. Go to: https://github.com/settings/tokens
+2. Click on "Generate new token" → "Generate new token (classic)"
+3. Give the token a name (e.g., "Desktop Widget")
+4. Select the scope: `read:user`
+5. Click on "Generate token"
+6. Copy the generated token
 
-### 3. Criar arquivo .env
+### 3. Create .env file
 
-Crie um arquivo `.env` na raiz do projeto (use `.env.example` como modelo):
+Create a `.env` file in the root of the project (use `.env.example` as a template):
 
 ```bash
 cp .env.example .env
 ```
 
-Edite o arquivo `.env` e adicione suas credenciais:
+Edit the `.env` file and add your credentials:
 
 ```env
-GITHUB_USERNAME=seu-usuario-github
-GITHUB_TOKEN=seu-token-aqui
+GITHUB_USERNAME=your-github-username
+GITHUB_TOKEN=your-token-here
 
-# Posição do widget (opcional)
+# Widget position (optional)
 WIDGET_X=20
 WIDGET_Y=20
 ```
 
-### 4. Executar o Widget
+### 4. Run the Widget
 
 ```bash
 npm start
 ```
 
-## 📦 Scripts Disponíveis
+## 📦 Available Scripts
 
-- `npm run build` - Compila o TypeScript
-- `npm start` - Compila e inicia o widget
-- `npm run dev` - Compila e inicia (modo desenvolvimento)
-- `npm run watch` - Compila automaticamente ao salvar
+- `npm run build` - Compiles TypeScript
+- `npm start` - Compiles and starts the widget
+- `npm run dev` - Compiles and starts (development mode)
+- `npm run watch` - Compiles automatically on save
 
-## ✨ Funcionalidades
+## ✨ Features
 
-- ✅ Design idêntico ao GitHub (fundo preto com pontos verdes)
-- ✅ Aparece na tela inicial (desktop wallpaper layer)
-- ✅ Roda em segundo plano de forma leve
-- ✅ Transparente e sem bordas
-- ✅ Arrastável pela barra superior
-- ✅ Tooltips com detalhes das contribuições
-- ✅ Configuração via arquivo .env
+- ✅ Design identical to GitHub (black background with green dots)
+- ✅ Appears on the desktop (wallpaper layer)
+- ✅ Runs in the background lightly
+- ✅ Transparent and borderless
+- ✅ Draggable by the top bar
+- ✅ Tooltips with contribution details
+- ✅ Configuration via .env file
 
-## 🎨 Níveis de Contribuição
+## 🎨 Contribution Levels
 
-O widget usa as mesmas cores do GitHub:
-- Cinza escuro: Nenhuma contribuição
-- Verde escuro: Poucas contribuições
-- Verde médio: Contribuições moderadas
-- Verde claro: Muitas contribuições
-- Verde brilhante: Contribuições intensas
+The widget uses the same colors as GitHub:
+- Dark gray: No contribution
+- Dark green: Few contributions
+- Medium green: Moderate contributions
+- Light green: Many contributions
+- Bright green: Intense contributions
 
-## 🔒 Segurança
+## 🔒 Security
 
-⚠️ **IMPORTANTE**: Nunca compartilhe seu token do GitHub publicamente. O arquivo `.env` já está no `.gitignore` para proteger suas credenciais.
+⚠️ **IMPORTANT**: Never share your GitHub token publicly. The `.env` file is already in `.gitignore` to protect your credentials.
