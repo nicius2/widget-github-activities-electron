@@ -20,15 +20,23 @@ Você precisa criar um Personal Access Token do GitHub:
 5. Clique em "Generate token"
 6. Copie o token gerado
 
-### 3. Editar Configuração
+### 3. Criar arquivo .env
 
-Abra o arquivo `src/renderer/renderer.ts` e altere as linhas 13-14:
+Crie um arquivo `.env` na raiz do projeto (use `.env.example` como modelo):
 
-```typescript
-const CONFIG = {
-  username: 'seu-usuario-github', // Seu usuário do GitHub
-  token: 'seu-token-aqui',        // Cole seu token aqui
-};
+```bash
+cp .env.example .env
+```
+
+Edite o arquivo `.env` e adicione suas credenciais:
+
+```env
+GITHUB_USERNAME=seu-usuario-github
+GITHUB_TOKEN=seu-token-aqui
+
+# Posição do widget (opcional)
+WIDGET_X=20
+WIDGET_Y=20
 ```
 
 ### 4. Executar o Widget
@@ -47,11 +55,12 @@ npm start
 ## ✨ Funcionalidades
 
 - ✅ Design idêntico ao GitHub (fundo preto com pontos verdes)
-- ✅ Sempre visível na tela (always-on-top)
+- ✅ Aparece na tela inicial (desktop wallpaper layer)
+- ✅ Roda em segundo plano de forma leve
 - ✅ Transparente e sem bordas
 - ✅ Arrastável pela barra superior
 - ✅ Tooltips com detalhes das contribuições
-- ✅ Atualização automática dos dados
+- ✅ Configuração via arquivo .env
 
 ## 🎨 Níveis de Contribuição
 
@@ -64,4 +73,4 @@ O widget usa as mesmas cores do GitHub:
 
 ## 🔒 Segurança
 
-⚠️ **IMPORTANTE**: Nunca compartilhe seu token do GitHub publicamente. Adicione `src/renderer/renderer.ts` ao `.gitignore` se for versionar o código.
+⚠️ **IMPORTANTE**: Nunca compartilhe seu token do GitHub publicamente. O arquivo `.env` já está no `.gitignore` para proteger suas credenciais.

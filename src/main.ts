@@ -18,7 +18,7 @@ function createWindow(): void {
 
      // Calculate position: Centered horizontally, 15% from top vertically
      const defaultX = Math.round((screenWidth - widgetWidth) / 2);
-     const defaultY = Math.round(screenHeight * 0.15);
+     const defaultY = Math.round(screenHeight * 0.05);
 
      // Get position from env or use calculated defaults
      const posX = parseInt(process.env.WIDGET_X || defaultX.toString(), 10);
@@ -29,6 +29,7 @@ function createWindow(): void {
           height: widgetHeight,
           x: posX,
           y: posY,
+          type: 'desktop', // Essential for Linux to keep it as a wallpaper widget
           frame: false,
           transparent: true,
           alwaysOnTop: false, // Changed to false to stay on desktop

@@ -4,9 +4,10 @@
   "description": "GitHub activity widget for desktop",
   "main": "dist/main.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && npm run copy-files",
+    "copy-files": "mkdir -p dist/renderer && cp src/renderer/index.html dist/renderer/ && cp src/renderer/styles.css dist/renderer/",
     "start": "npm run build && electron .",
-    "dev": "tsc && electron .",
+    "dev": "npm run build && electron .",
     "watch": "tsc --watch"
   },
   "keywords": [
