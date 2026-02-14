@@ -1,4 +1,7 @@
 # GitHub Activity Widget
+<img width="1002" height="482" alt="image" src="https://github.com/user-attachments/assets/d60319af-f098-41ab-9f38-2f0e18c9005c" />
+
+
 
 Desktop widget created with Electron + TypeScript that displays your GitHub activity graph on your desktop.
 
