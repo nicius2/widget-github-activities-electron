@@ -8,15 +8,24 @@ interface ContributionWeek {
      days: ContributionDay[];
 }
 
+interface Window {
+     env: {
+          GITHUB_USERNAME: string;
+          GITHUB_TOKEN: string;
+     };
+}
+
+// Read configuration from environment variables exposed by preload
 const CONFIG = {
-     username: 'SEU_USUARIO_GITHUB', // Altere para seu usuário do GitHub
-     token: 'SEU_TOKEN_AQUI', // Altere para seu token do GitHub
+     username: window.env?.GITHUB_USERNAME || '',
+     token: window.env?.GITHUB_TOKEN || '',
 };
 
-async function fetchGitHubContributions(): Promise<ContributionDay[]> {
+async function fetchGitHubContributions(): Promise<{ contributions: ContributionDay[]; name: string }> {
      const query = `
     query($userName:String!) {
       user(login: $userName) {
+        name
         contributionsCollection {
           contributionCalendar {
             totalContributions
@@ -34,6 +43,10 @@ async function fetchGitHubContributions(): Promise<ContributionDay[]> {
   `;
 
      try {
+          console.log('Making API request to GitHub...');
+          console.log('Username:', CONFIG.username);
+          console.log('Token (first 10 chars):', CONFIG.token.substring(0, 10) + '...');
+
           const response = await fetch('https://api.github.com/graphql', {
                method: 'POST',
                headers: {
@@ -46,7 +59,9 @@ async function fetchGitHubContributions(): Promise<ContributionDay[]> {
                }),
           });
 
+          console.log('Response status:', response.status);
           const data = await response.json();
+          console.log('Response data:', data);
 
           if (data.errors) {
                console.error('GitHub API Error:', data.errors);
@@ -67,7 +82,7 @@ async function fetchGitHubContributions(): Promise<ContributionDay[]> {
                });
           });
 
-          return contributions;
+          return { contributions, name: data.data.user.name || CONFIG.username };
      } catch (error) {
           console.error('Error fetching contributions:', error);
           throw error;
@@ -158,14 +173,20 @@ function hideTooltip(): void {
 async function init(): Promise<void> {
      const loadingElement = document.getElementById('loading');
 
+     console.log('=== Widget Initialization ===');
+     console.log('window.env:', window.env);
+     console.log('CONFIG:', CONFIG);
+
      try {
-          if (CONFIG.token === 'SEU_TOKEN_AQUI' || CONFIG.username === 'SEU_USUARIO_GITHUB') {
+          if (!CONFIG.token || !CONFIG.username) {
+               console.error('Missing credentials!');
                if (loadingElement) {
                     loadingElement.innerHTML = `
           <div style="color: #f85149;">
             ⚠️ Configure seu usuário e token do GitHub<br>
             <span style="font-size: 11px; color: #8b949e;">
-              Edite o arquivo src/renderer/renderer.ts
+              Crie um arquivo .env na raiz do projeto<br>
+              Use .env.example como modelo
             </span>
           </div>
         `;
@@ -173,7 +194,16 @@ async function init(): Promise<void> {
                return;
           }
 
-          const contributions = await fetchGitHubContributions();
+          console.log('Fetching contributions for user:', CONFIG.username);
+          const { contributions, name } = await fetchGitHubContributions();
+          console.log('Contributions fetched:', contributions.length);
+
+          // Update title
+          const titleElement = document.querySelector('.widget-title');
+          if (titleElement) {
+               titleElement.textContent = `🌿 Olá, ${name}`;
+          }
+
           renderContributionGraph(contributions);
      } catch (error) {
           console.error('Initialization error:', error);
