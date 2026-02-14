@@ -1,4 +1,4 @@
-import { app, BrowserWindow, screen } from 'electron';
+import { app, BrowserWindow, screen, ipcMain } from 'electron';
 import * as path from 'path';
 import * as dotenv from 'dotenv';
 
@@ -8,6 +8,14 @@ dotenv.config();
 console.log('=== Main Process ===');
 console.log('GITHUB_USERNAME:', process.env.GITHUB_USERNAME);
 console.log('GITHUB_TOKEN:', process.env.GITHUB_TOKEN ? 'Loaded' : 'NOT loaded');
+
+// IPC handler to provide env vars to renderer
+ipcMain.handle('get-env', () => {
+     return {
+          GITHUB_USERNAME: process.env.GITHUB_USERNAME,
+          GITHUB_TOKEN: process.env.GITHUB_TOKEN,
+     };
+});
 
 let mainWindow: BrowserWindow | null = null;
 

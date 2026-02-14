@@ -8,17 +8,20 @@ interface ContributionWeek {
      days: ContributionDay[];
 }
 
+interface EnvVars {
+     GITHUB_USERNAME: string;
+     GITHUB_TOKEN: string;
+}
+
 interface Window {
      env: {
-          GITHUB_USERNAME: string;
-          GITHUB_TOKEN: string;
+          getEnv: () => Promise<EnvVars>;
      };
 }
 
-// Read configuration from environment variables exposed by preload
-const CONFIG = {
-     username: window.env?.GITHUB_USERNAME || '',
-     token: window.env?.GITHUB_TOKEN || '',
+let CONFIG = {
+     username: '',
+     token: '',
 };
 
 async function fetchGitHubContributions(): Promise<{ contributions: ContributionDay[]; name: string }> {
@@ -174,10 +177,16 @@ async function init(): Promise<void> {
      const loadingElement = document.getElementById('loading');
 
      console.log('=== Widget Initialization ===');
-     console.log('window.env:', window.env);
-     console.log('CONFIG:', CONFIG);
 
      try {
+          // Fetch env vars from main process
+          const envVars = await window.env.getEnv();
+          console.log('Environment variables loaded:', envVars);
+
+          CONFIG.username = envVars.GITHUB_USERNAME || '';
+          CONFIG.token = envVars.GITHUB_TOKEN || '';
+
+          console.log('CONFIG:', CONFIG);
           if (!CONFIG.token || !CONFIG.username) {
                console.error('Missing credentials!');
                if (loadingElement) {
